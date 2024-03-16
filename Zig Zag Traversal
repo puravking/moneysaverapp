@@ -1,0 +1,100 @@
+// /**
+//  * Definition for a binary tree node.
+//  * struct TreeNode {
+//  *     int val;
+//  *     TreeNode *left;
+//  *     TreeNode *right;
+//  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+//  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+//  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+//  * };
+//  */
+// class Solution {
+// public:
+//     vector<vector<int>> zigzagLevelOrder(TreeNode* root) 
+//     {
+//         vector<vector<int>> ans;
+//         queue<TreeNode*> q;
+//         q.push(root);
+//         while(!q.empty())
+//         {
+//             int s = q.size();
+//             int k = 0;
+//             vector<int> v;
+//             for(int i = 0;i<q.size();i++)
+//             {
+//                 TreeNode* temp = q.front();
+                
+//                 q.pop();
+//                 int index;
+//                 if(k&1)
+//                 index = s-1-i;
+//                 else 
+//                 index = i;
+//                 v[index] = temp->val;
+//                 if(temp->left!=NULL) q.push(temp->left);
+//                 if(temp->right!=NULL) q.push(temp->right);
+                
+//             }
+//             k++;
+//             ans.push_back(v);
+//         }
+//         return ans;
+//     }
+// };
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+    vector<vector<int>>ans;
+    queue<TreeNode*>q;
+
+    if(root==NULL)
+    {
+        return ans;
+    }
+    q.push(root);
+    while(!q.empty())
+    {
+        int n=q.size();
+        //inner list to store curr lvl of elements
+        vector<int>in;
+
+        //Doing 2 steps
+        for(int i=1;i<=n;i++)
+        {
+            //remove front after storing it
+            TreeNode* temp=q.front();
+            q.pop();
+            in.push_back(temp->val);
+
+            //add next lvl elements
+            if(temp->left!=NULL)
+            {
+                q.push(temp->left);
+            }
+            if(temp->right!=NULL)
+            {
+                q.push(temp->right);
+            }
+        }
+        ans.push_back(in);
+    }
+    for(int i=1;i<ans.size();i+=2)
+    {
+        
+            reverse(ans[i].begin(),ans[i].end());
+    }
+    return ans;
+    }
+};
