@@ -6,7 +6,7 @@ function updateBalance() {
     document.getElementById('balance').innerText = `Balance: ₹${balance.toFixed(2)}`;
 }
 
-function deposit() {
+function deposit() { 
     const amount = parseFloat(document.getElementById('amount').value);
     if (!isNaN(amount) && amount > 0) {
         balance += amount;
